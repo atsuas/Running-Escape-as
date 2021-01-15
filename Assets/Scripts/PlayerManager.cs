@@ -14,8 +14,8 @@ public class PlayerManager : MonoBehaviour
     DIRECTION_TYPE direction = DIRECTION_TYPE.STOP;
 
     Rigidbody2D rigidbody2D;
-
     float speed;
+    float jumpPower = 400;
 
     private void Start()
     {
@@ -41,6 +41,10 @@ public class PlayerManager : MonoBehaviour
             //左へ
             direction = DIRECTION_TYPE.LEFT;
         }
+        if (Input.GetKeyDown("space"))
+        {
+            Jump();
+        }
     }
 
     private void FixedUpdate()
@@ -60,5 +64,10 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
         rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
+    }
+    void Jump()
+    {
+        //上に力を加える
+        rigidbody2D.AddForce(Vector2.up * jumpPower);
     }
 }
