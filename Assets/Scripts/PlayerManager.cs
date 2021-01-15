@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] LayerMask blockLayer;
     public enum DIRECTION_TYPE
     {
         STOP,
@@ -41,7 +42,7 @@ public class PlayerManager : MonoBehaviour
             //左へ
             direction = DIRECTION_TYPE.LEFT;
         }
-        if (Input.GetKeyDown("space"))
+        if (IsGround() && Input.GetKeyDown("space"))
         {
             Jump();
         }
@@ -69,5 +70,17 @@ public class PlayerManager : MonoBehaviour
     {
         //上に力を加える
         rigidbody2D.AddForce(Vector2.up * jumpPower);
+    }
+
+    bool IsGround()
+    {
+        //始点と終点を作成
+        Vector3 leftStartPoint = transform.position - Vector3.right * 0.2f;
+        Vector3 rightStartPoint = transform.position + Vector3.right * 0.2f;
+        Vector3 endPoint = transform.position - Vector3.up * 0.1f;
+        Debug.DrawLine(leftStartPoint, endPoint);
+        Debug.DrawLine(rightStartPoint, endPoint);
+        return Physics2D.Linecast(leftStartPoint, endPoint, blockLayer)
+            || Physics2D.Linecast(rightStartPoint, endPoint, blockLayer);
     }
 }
