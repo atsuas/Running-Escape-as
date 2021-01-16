@@ -28,9 +28,24 @@ public class DemoWizard : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) {
             anim.SetBool("isJumping",false);
+
+        
     }
 
+    //private void OnTriggerEnter(Collider collision)
+    //{
+    //    if (collision.gameObject.tag == "Trap")
+    //    {
+    //        Debug.Log("ゲームオーバー");
+    //    }
+    //    if (collision.gameObject.tag == "Finish")
+    //    {
+    //        Debug.Log("クリア");
+    //    }
 
+    //}
+
+   
     void Run(){
         Vector3 moveVelocity= Vector3.zero;
             anim.SetBool("isRunning",false);
@@ -72,5 +87,5 @@ public class DemoWizard : MonoBehaviour
 
         isJumping=false;
     }
-    
+
 }
