@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
     [SerializeField] LayerMask blockLayer;
     public enum DIRECTION_TYPE
     {
@@ -89,6 +90,7 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.tag == "Trap")
         {
             Debug.Log("ゲームオーバー");
+            gameManager.GameOver();
         }
         if (collision.gameObject.tag == "Finish")
         {

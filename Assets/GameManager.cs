@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    
+    [SerializeField] GameObject gameOverText;
+
+    public void GameOver()
+    {
+        gameOverText.SetActive(true);
+    }
 }
