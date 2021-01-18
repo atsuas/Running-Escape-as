@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [SerializeField] LayerMask blockLayer;
+
     public enum DIRECTION_TYPE
     {
         STOP,
@@ -25,6 +27,11 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
+        if (!IsGround())
+        {
+            //方向を変える
+            ChangeDirection();
+        }
     }
 
     private void FixedUpdate()
@@ -44,5 +51,30 @@ public class EnemyManager : MonoBehaviour
                 break;
         }
         rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
+    }
+
+    bool IsGround()
+    {
+        Vector3 startVec = transform.position + transform.right * 1.0f * transform.localScale.x;
+        Vector3 endVec = startVec - transform.up * 1.0f;
+        Debug.DrawLine(startVec, endVec);
+        return Physics2D.Linecast(startVec, endVec, blockLayer);
+    }
+
+    void ChangeDirection()
+    {
+        if (direction == DIRECTION_TYPE.RIGHT)
+        {
+            direction = DIRECTION_TYPE.LEFT;
+        }
+        else if (direction == DIRECTION_TYPE.LEFT)
+        {
+            direction = DIRECTION_TYPE.RIGHT;
+        }
+    }
+
+    public void DestroyEnemy()
+    {
+        Destroy(this.gameObject);
     }
 }

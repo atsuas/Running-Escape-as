@@ -102,5 +102,23 @@ public class PlayerManager : MonoBehaviour
             //アイテム取得
             collision.gameObject.GetComponent<ItemManager>().GetItem();
         }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
+            if (this.transform.position.y + 0.2f > enemy.transform.position.y)
+            {
+                //上から踏んだら敵を削除
+                rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+                Jump();
+                enemy.DestroyEnemy();
+            }
+            else
+            {
+                //横からぶつかったら
+                Destroy(this.gameObject);
+                gameManager.GameOver();
+            }
+
+        }
     }
 }
