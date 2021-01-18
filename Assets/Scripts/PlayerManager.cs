@@ -95,6 +95,7 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.tag == "Finish")
         {
             Debug.Log("クリア");
+            gameManager.GameClear();
         }
     }
 }
