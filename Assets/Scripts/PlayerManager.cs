@@ -48,9 +48,17 @@ public class PlayerManager : MonoBehaviour
             //左へ
             direction = DIRECTION_TYPE.LEFT;
         }
-        if (IsGround() && Input.GetKeyDown("space"))
+        //スペースが押されたらJumpさせる
+        if (IsGround())
         {
-            Jump();
+            if (Input.GetKeyDown("space"))
+            {
+                Jump();
+            }
+            else
+            {
+                //animator.SetBool("isJumping", false);
+            }
         }
     }
 
@@ -76,6 +84,7 @@ public class PlayerManager : MonoBehaviour
     {
         //上に力を加える
         rigidbody2D.AddForce(Vector2.up * jumpPower);
+        //animator.SetBool("isJumping", true);
     }
 
     bool IsGround()
