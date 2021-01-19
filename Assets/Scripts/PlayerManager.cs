@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     //Animator animator;
 
     float jumpPower = 400;
+    //bool isDead = false;
 
     private void Start()
     {
@@ -30,6 +31,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        //if (isDead)
+        //{
+        //    return;
+        //}
+
         float x = Input.GetAxis("Horizontal"); //方向キーの取得
         //animator.SetFloat("speed", Mathf.Abs(x));
 
@@ -58,6 +64,11 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //if (isDead)
+        //{
+        //    return;
+        //}
+
         switch (direction)
         {
             case DIRECTION_TYPE.STOP:
@@ -95,6 +106,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if (isDead)
+        //{
+        //    return;
+        //}
+
         if (collision.gameObject.tag == "Trap")
         {
             Debug.Log("ゲームオーバー");
@@ -128,4 +144,8 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+    //void PlayerDeath()
+    //{
+    //    isDead = true; この１文を追加する
+    //}
 }
