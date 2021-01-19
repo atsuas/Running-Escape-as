@@ -15,6 +15,5 @@ public class ItemManager : MonoBehaviour
     {
         gameManager.AddScore(100);
         Destroy(this.gameObject);
-        
     }
 }
