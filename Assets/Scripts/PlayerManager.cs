@@ -147,5 +147,7 @@ public class PlayerManager : MonoBehaviour
     //void PlayerDeath()
     //{
     //    isDead = true; この１文を追加する
+    //    BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+    //    Destroy(boxCollider2D);
     //}
 }
