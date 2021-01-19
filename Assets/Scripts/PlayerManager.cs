@@ -17,16 +17,21 @@ public class PlayerManager : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
     float speed;
+
+    //Animator animator;
+
     float jumpPower = 400;
 
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        //animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        float x = Input.GetAxis("Horizontal");
+        float x = Input.GetAxis("Horizontal"); //方向キーの取得
+        //animator.SetFloat("speed", Mathf.Abs(x));
 
         if (x == 0)
         {
@@ -57,11 +62,11 @@ public class PlayerManager : MonoBehaviour
                 speed = 0;
                 break;
             case DIRECTION_TYPE.RIGHT:
-                speed = 3;
+                speed = 2;
                 transform.localScale = new Vector3(1, 1, 1);
                 break;
             case DIRECTION_TYPE.LEFT:
-                speed = -3;
+                speed = -2;
                 transform.localScale = new Vector3(-1, 1, 1);
                 break;
         }
