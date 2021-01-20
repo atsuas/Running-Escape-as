@@ -157,6 +157,8 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 256
+  deathEfect: {fileID: 6437875762587734591, guid: c747588010fee4d0b88e2b918f336851,
+    type: 3}
 --- !u!61 &5753528079576285044
 BoxCollider2D:
   m_ObjectHideFlags: 0

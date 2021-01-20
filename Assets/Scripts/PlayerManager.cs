@@ -17,16 +17,34 @@ public class PlayerManager : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
     float speed;
+
+    //Animator animator;
+
+    //SE
+    [SerializeField] AudioClip getItemSE;
+    [SerializeField] AudioClip jumpSE;
+    [SerializeField] AudioClip stampSE;
+    AudioSource audioSource;
+
     float jumpPower = 400;
+    //bool isDead = false;
 
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+        //animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        float x = Input.GetAxis("Horizontal");
+        //if (isDead)
+        //{
+        //    return;
+        //}
+
+        float x = Input.GetAxis("Horizontal"); //方向キーの取得
+        //animator.SetFloat("speed", Mathf.Abs(x));
 
         if (x == 0)
         {
@@ -43,25 +61,32 @@ public class PlayerManager : MonoBehaviour
             //左へ
             direction = DIRECTION_TYPE.LEFT;
         }
+        //スペースが押されたらJumpさせる
         if (IsGround() && Input.GetKeyDown("space"))
         {
             Jump();
+            //animator.SetBool("isJumping", false);
         }
     }
 
     private void FixedUpdate()
     {
+        //if (isDead)
+        //{
+        //    return;
+        //}
+
         switch (direction)
         {
             case DIRECTION_TYPE.STOP:
                 speed = 0;
                 break;
             case DIRECTION_TYPE.RIGHT:
-                speed = 3;
+                speed = 2;
                 transform.localScale = new Vector3(1, 1, 1);
                 break;
             case DIRECTION_TYPE.LEFT:
-                speed = -3;
+                speed = -2;
                 transform.localScale = new Vector3(-1, 1, 1);
                 break;
         }
@@ -71,6 +96,8 @@ public class PlayerManager : MonoBehaviour
     {
         //上に力を加える
         rigidbody2D.AddForce(Vector2.up * jumpPower);
+        audioSource.PlayOneShot(jumpSE);
+        //animator.SetBool("isJumping", true);
     }
 
     bool IsGround()
@@ -87,6 +114,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if (isDead)
+        //{
+        //    return;
+        //}
+
         if (collision.gameObject.tag == "Trap")
         {
             Debug.Log("ゲームオーバー");
@@ -100,6 +132,7 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.tag == "Item")
         {
             //アイテム取得
+            audioSource.PlayOneShot(getItemSE);
             collision.gameObject.GetComponent<ItemManager>().GetItem();
         }
         if (collision.gameObject.tag == "Enemy")
@@ -110,6 +143,7 @@ public class PlayerManager : MonoBehaviour
                 //上から踏んだら敵を削除
                 rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
                 Jump();
+                audioSource.PlayOneShot(stampSE);
                 enemy.DestroyEnemy();
             }
             else
@@ -118,7 +152,12 @@ public class PlayerManager : MonoBehaviour
                 Destroy(this.gameObject);
                 gameManager.GameOver();
             }
-
         }
     }
+    //void PlayerDeath()
+    //{
+    //    isDead = true; この１文を追加する
+    //    BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+    //    Destroy(boxCollider2D);
+    //}
 }

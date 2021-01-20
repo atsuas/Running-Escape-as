@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject gameOverText;
     [SerializeField] GameObject gameClearText;
+    [SerializeField] GameObject gameOverText;
     [SerializeField] Text scoreText;
+
+    //SE
+    [SerializeField] AudioClip gameClearSE;
+    [SerializeField] AudioClip gameOverSE;
+    AudioSource audioSource;
 
     const int MAX_SCORE = 9999;
     int score = 0;
@@ -16,6 +21,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         scoreText.text = score.ToString();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void AddScore(int val)
@@ -31,11 +37,13 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOverText.SetActive(true);
+        audioSource.PlayOneShot(gameOverSE);
         Invoke("RestartScene", 1.5f);
     }
     public void GameClear()
     {
         gameClearText.SetActive(true);
+        audioSource.PlayOneShot(gameClearSE);
         Invoke("RestartScene", 1.5f);
     }
 
